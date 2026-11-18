@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Auror Studios · Dawnkids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;1,800;1,900&display=swap" rel="stylesheet">
+<script>(w=>{console.warn=(...a)=>/cdn\.tailwindcss\.com/.test(String(a[0]))||w.apply(console,a)})(console.warn)</script>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--bg:#cfe0ff;--ink:#0a0a0a;--paper:#fff;--red:#ff1f2d;--soft:rgba(255,255,255,.35);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08080d;--ink:#f5f5f7;--paper:#14141c;--soft:rgba(255,255,255,.08);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#08080d;--ink:#f5f5f7;--paper:#14141c;--soft:rgba(255,255,255,.08);color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth;height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Montserrat,system-ui,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.d{font-weight:900;font-style:italic;letter-spacing:-.03em;text-transform:uppercase;line-height:.88}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+header button{background:none;border:0;color:inherit;position:relative;padding:6px;cursor:pointer}
+#count{position:absolute;top:-2px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:99px;min-width:16px;height:16px;display:grid;place-items:center}
+.sig{font-size:10px;letter-spacing:.22em;opacity:.7;font-style:italic;font-weight:500}
+/* drawer */
+#drawer{position:fixed;inset:0;z-index:50;background:var(--red);color:#fff;padding:calc(env(safe-area-inset-top,0px) + 20px) 24px 24px;display:flex;flex-direction:column;clip-path:circle(0 at 30px 40px);visibility:hidden;transition:clip-path .75s cubic-bezier(.7,0,.2,1),visibility 0s .75s;overflow-y:auto}
+#drawer.open{clip-path:circle(160% at 30px 40px);visibility:visible;transition:clip-path .75s cubic-bezier(.7,0,.2,1)}
+#drawer a{display:block;font-size:clamp(40px,11vw,92px);padding:.12em 0;transform:translateY(40px);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s;color:#fff;text-decoration:none}
+#drawer.open a{transform:none;opacity:1}
+#drawer.open a:nth-of-type(1){transition-delay:.25s}#drawer.open a:nth-of-type(2){transition-delay:.32s}#drawer.open a:nth-of-type(3){transition-delay:.39s}#drawer.open a:nth-of-type(4){transition-delay:.46s}
+#drawer a:hover{-webkit-text-stroke:2px #fff;color:transparent}
+/* hero */
+.hero{position:relative;background:var(--red);color:#fff;overflow:hidden;padding:36px 16px 20px;perspective:900px}
+.hero h1{font-size:clamp(72px,24vw,260px);margin:0;position:relative;z-index:1;text-shadow:1px 1px 0 #900,2px 2px 0 #900,3px 3px 0 #800,4px 4px 0 #800,5px 5px 0 #700,6px 6px 12px rgba(0,0,0,.4);transform:translate3d(var(--tx,0),var(--ty,0),0)}
+.hero .stage3{position:relative;max-width:420px;margin:-6vw auto 0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease-out;z-index:2}
+.hero .stage3 svg{width:100%;filter:drop-shadow(0 40px 30px rgba(0,0,0,.45));transform:translateZ(60px);animation:float 5s ease-in-out infinite}
+@keyframes float{50%{translate:0 -12px}}
+.cta{position:relative;display:inline-block;overflow:hidden;background:#fff;color:#000;font-weight:900;font-style:italic;text-transform:uppercase;padding:16px 30px;border:0;cursor:pointer;letter-spacing:-.01em;text-decoration:none}
+.cta::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,60,60,.55),transparent);transform:skewX(-20deg);transition:left .7s}
+.cta:hover::after,.cta:focus-visible::after{left:130%}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 0 #000}
+.cta.dark{background:#000;color:#fff}
+.band{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding:18px 0}
+.band div{display:inline-block;font-size:clamp(40px,9vw,90px);animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* cards */
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 14px}
+@media (min-width:900px){.grid2{grid-template-columns:repeat(4,1fr);gap:36px 24px}}
+.card{position:relative;touch-action:pan-y;cursor:pointer}
+.tilt{position:relative;aspect-ratio:1/1.05;transform-style:preserve-3d;transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));transition:transform .18s ease-out;display:grid;place-items:center;border-radius:4px}
+.tilt::before{content:"";position:absolute;inset:6% 4%;background:var(--soft);transform:translateZ(-20px);transition:background .3s}
+.card:hover .tilt::before,.card.on .tilt::before{background:rgba(255,255,255,.55)}
+.tilt::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.35),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;transform:translateZ(80px)}
+.card:hover .tilt::after{opacity:1}
+.tilt svg{width:88%;transform:translateZ(50px);filter:drop-shadow(0 18px 14px rgba(0,0,0,.28));transition:filter .3s}
+.card:hover .tilt svg{filter:drop-shadow(0 38px 24px rgba(0,0,0,.45))}
+.sizes{position:absolute;left:0;right:0;bottom:4%;display:flex;gap:6px;justify-content:center;transform:translateZ(90px) translateY(12px);opacity:0;pointer-events:none;transition:.3s}
+.card:hover .sizes,.card.on .sizes{opacity:1;transform:translateZ(90px);pointer-events:auto}
+.sizes b{background:var(--paper);color:var(--ink);font-size:11px;width:32px;height:32px;display:grid;place-items:center;border:1.5px solid var(--ink);cursor:pointer}
+.sizes b.sel{background:var(--ink);color:var(--paper)}
+.card h3{font-weight:500;font-size:14px;margin:10px 0 2px;line-height:1.3}
+.card .pr{font-size:14px;opacity:.9;margin:0}
+.add{margin-top:8px;width:100%;background:var(--ink);color:var(--paper);border:0;padding:10px;font-weight:800;font-style:italic;text-transform:uppercase;font-size:12px;cursor:pointer;transition:background .2s,color .2s}
+.add:hover{background:var(--red);color:#fff}
+.chip{border:2px solid var(--ink);background:transparent;color:var(--ink);padding:8px 16px;font-weight:800;font-style:italic;text-transform:uppercase;font-size:12px;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--paper)}
+/* tracker */
+.trk{background:var(--paper);color:var(--ink);max-width:640px;margin:0 auto;padding:28px 18px 24px}
+.tab{flex:1;background:none;border:0;border-bottom:1px solid rgba(128,128,128,.4);padding:14px 4px;color:inherit;font:inherit;cursor:pointer}
+.tab.on{border-bottom:4px solid var(--ink)}
+.trk label{display:block;margin:20px 0 4px;font-size:15px}
+.trk input{width:100%;box-sizing:border-box;border:3px solid var(--ink);background:rgba(128,128,128,.12);color:var(--ink);padding:16px;font:inherit}
+.trk input:focus{outline:3px solid var(--red);outline-offset:2px}
+.steps li{display:flex;gap:12px;align-items:center;padding:10px 0;opacity:.45;list-style:none}
+.steps li.ok{opacity:1}.steps i{width:14px;height:14px;border-radius:50%;border:3px solid var(--ink);flex:none}
+.steps li.ok i{background:var(--ink)}.steps li.now i{background:var(--red);border-color:var(--red);box-shadow:0 0 0 6px rgba(255,0,0,.2)}
+/* chat + toast */
+#chatBtn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;background:#111;color:#fff;border:0;border-radius:99px;padding:14px 22px;font:600 16px Montserrat,sans-serif;display:flex;gap:8px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);cursor:pointer}
+#chat{position:fixed;right:16px;bottom:calc(80px + env(safe-area-inset-bottom,0px));z-index:40;width:min(340px,calc(100vw - 32px));background:var(--paper);color:var(--ink);border:3px solid var(--ink);transform:translateY(20px) scale(.96);opacity:0;pointer-events:none;transition:.25s;box-shadow:8px 8px 0 var(--ink)}
+#chat.open{transform:none;opacity:1;pointer-events:auto}
+#log{max-height:220px;overflow-y:auto;padding:12px;font-size:13px;display:flex;flex-direction:column;gap:8px}
+#log p{margin:0;padding:8px 10px;max-width:85%}.bot{background:rgba(128,128,128,.18)}.me{background:var(--ink);color:var(--paper);align-self:flex-end}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:#000;color:#fff;padding:12px 20px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:60;white-space:nowrap}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px #000}
+#pre{position:fixed;inset:0;z-index:100;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;transition:transform .9s cubic-bezier(.7,0,.2,1)}#pre.go{transform:translateY(-101%)}#pre span{font-size:clamp(56px,20vw,200px)}
+#bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:4px;background:#fff;mix-blend-mode:difference;width:0;z-index:35}
+.cur{position:fixed;left:0;top:0;width:36px;height:36px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:200;transform:translate(-50%,-50%);opacity:0;transition:width .2s,height .2s}@media (pointer:coarse){.cur{display:none}}
+.rv{opacity:0;transform:translateY(60px) scale(.97);transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+.outline{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.hero{min-height:calc(100svh - 90px);display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 50% 55%,#ff6a3d,#ff1f2d 45%,#a3001b 100%)}
+.bgword{position:absolute;left:0;right:0;top:50%;font-size:clamp(130px,44vw,640px);text-align:center;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.35);transform:translate(calc(var(--tx,0px)*3),-50%);white-space:nowrap;pointer-events:none}
+.orb{position:absolute;width:24%;max-width:160px;z-index:0;transform:translate3d(calc(var(--tx,0px)*-3),calc(var(--ty,0px)*-3),0) rotate(var(--r));animation:float 6s ease-in-out infinite}.orb svg{width:100%;display:block;filter:drop-shadow(0 22px 16px rgba(0,0,0,.4))}
+.badge{position:absolute;right:4%;bottom:5%;width:clamp(90px,18vw,170px);z-index:4;animation:spin 14s linear infinite}@keyframes spin{to{rotate:360deg}}
+.lb{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.lb::-webkit-scrollbar{display:none}
+.pan{flex:0 0 min(86vw,520px);height:min(118vw,680px);scroll-snap-align:center;position:relative;overflow:hidden;display:grid;place-items:center;perspective:900px}
+.pan .w{position:absolute;left:10px;top:18px;font-size:clamp(60px,16vw,130px);z-index:1;color:#fff}.pan .outline{color:transparent;-webkit-text-stroke-color:#fff}
+.pan svg{width:82%;position:relative;z-index:2;transform:rotateY(var(--ry,-10deg)) translateZ(40px);filter:drop-shadow(0 40px 30px rgba(0,0,0,.5));transition:transform .2s}
+.mega{font-size:clamp(60px,19.5vw,320px);text-align:center;overflow:hidden;white-space:nowrap;padding:30px 0 0;line-height:.8}
+#qv{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:.3s;padding:16px}#qv.open{opacity:1;pointer-events:auto}
+#qv .box{background:var(--bg);width:min(920px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr}@media (min-width:760px){#qv .box{grid-template-columns:1.2fr 1fr}}
+#qvView{perspective:900px;display:grid;place-items:center;padding:24px;cursor:grab;touch-action:pan-y;background:radial-gradient(circle,var(--soft),transparent 70%)}
+#qvView svg{width:92%;transform:rotateY(var(--vy,0deg));transition:transform .12s;filter:drop-shadow(0 30px 24px rgba(0,0,0,.45))}
+.szs{display:flex;gap:8px}.szs b{background:var(--paper);color:var(--ink);font-size:13px;width:44px;height:44px;display:grid;place-items:center;border:2px solid var(--ink);cursor:pointer}.szs b.sel{background:var(--ink);color:var(--paper)}
+#cartO{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.3s}
+#cartP{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:81;background:var(--paper);color:var(--ink);transform:translateX(105%);transition:transform .5s cubic-bezier(.7,0,.2,1);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.cartOpen #cartO{opacity:1;pointer-events:auto}.cartOpen #cartP{transform:none}
+.ci{display:flex;gap:12px;align-items:center;list-style:none;padding:12px 0;border-bottom:1px solid rgba(128,128,128,.3)}
+.ci .th{width:76px;height:76px;flex:none;background:var(--bg);display:grid;place-items:center}.ci .th svg{width:92%}
+.ci .g{flex:1;min-width:0;font-size:13px;line-height:1.3}.ci small{display:block;opacity:.7;margin:2px 0 8px}
+.qty{display:flex;gap:6px;align-items:center}.qty button{background:none;border:2px solid var(--ink);color:var(--ink);min-width:28px;height:28px;cursor:pointer;font-weight:800;padding:0 6px}.qty .rm{border:0;text-decoration:underline;font-weight:500;font-size:12px}
+.emp{text-align:center;opacity:.7;margin:40px 0}
+.spot{position:relative;overflow:hidden;background:linear-gradient(135deg,#0a0a0a 0%,#2a0a0e 60%,#ff1f2d 150%);color:#fff;padding:64px 16px;display:grid;gap:24px;align-items:center;min-height:540px;perspective:1000px}
+@media (min-width:820px){.spot{grid-template-columns:1fr 1fr;padding:80px 8vw}}
+.spot>*{position:relative;z-index:1}.spot .ring{position:absolute;right:-10%;top:-18%;font-size:clamp(160px,38vw,520px);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.16);white-space:nowrap;pointer-events:none;z-index:0}
+.spin svg{width:min(80%,420px);display:block;margin:0 auto;animation:sway 6s ease-in-out infinite;filter:drop-shadow(0 40px 30px rgba(0,0,0,.6))}
+@keyframes sway{0%,100%{transform:rotateY(-28deg) rotate(-3deg)}50%{transform:rotateY(28deg) rotate(3deg)}}
+/* ---- v4: anillo 3D, foco de luz, manifiesto, grano ---- */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:150;opacity:.08;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27140%27 height=%27140%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence baseFrequency=%27.9%27 numOctaves=%272%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27/%3E%3C/svg%3E")}
+.hero{background:radial-gradient(circle at 50% 38%,rgba(255,36,54,.6),transparent 58%),#07070b;padding-bottom:40px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(480px circle at var(--mx,50%) var(--my,40%),rgba(148,184,240,.3),transparent 60%);pointer-events:none;z-index:3}
+.hero h1{text-shadow:none;background:linear-gradient(180deg,#fff 20%,#94b8f0);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 0 #ff2436)}
+#orbs{display:none}
+.hero .stage3{max-width:none;width:100%;height:clamp(300px,64vw,460px);margin:2vw 0 0}
+.rc{--w:clamp(104px,25vw,180px);--R:calc(var(--w)*2.25);position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;animation:rot 32s linear infinite}
+.stage3:hover .rc{animation-play-state:paused}@keyframes rot{to{transform:rotateY(-360deg)}}
+.it{position:absolute;width:var(--w);left:calc(var(--w)/-2);top:calc(var(--w)*-.55);transform:rotateY(var(--a)) translateZ(var(--R));background:none;border:0;padding:0;color:#fff;cursor:pointer;text-align:center}
+.hero .stage3 .it svg{width:100%;display:block;transform:none;animation:none;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 22px rgba(148,184,240,.5))}
+.it small{display:block;font:800 italic 10px Montserrat,sans-serif;text-transform:uppercase;margin-top:6px}
+.mf span{opacity:.18;transition:opacity .35s}.mf span.on{opacity:1}
+.tilt::before{background:radial-gradient(circle at 50% 35%,rgba(148,184,240,.6),rgba(148,184,240,.1) 70%)}
+.tilt svg{filter:drop-shadow(0 0 1.5px rgba(255,255,255,.7)) drop-shadow(0 18px 14px rgba(0,0,0,.45))}
+.ci .th{background:#94b8f0}#qvView{background:radial-gradient(circle,#b8d0f7,#5f84c4 80%)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="pre"><span class="d">Auror<br>Studios®</span><b id="pn" class="d" style="position:absolute;right:16px;bottom:10px;font-size:clamp(60px,18vw,200px)">0</b></div><div id="bar"></div><div class="cur" id="cur"></div>
+
+<div class="sig text-center py-1.5" style="background:#000;color:#fff;opacity:1">AUROR STUDIOS® · HECHO POR PEPE</div>
+
+<header>
+  <div class="flex gap-2">
+    <button id="menuBtn" aria-label="Abrir menú"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h16M4 15h16"/></svg></button>
+    <button id="themeBtn" aria-label="Cambiar tema claro u oscuro"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4v16" /></svg></button>
+  </div>
+  <a href="#top" class="d text-lg" style="color:inherit;text-decoration:none" id="top">Auror<br>Studios</a>
+  <button id="cartBtn" aria-label="Bolsa"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span id="count">0</span></button>
+</header>
+
+<nav id="drawer" aria-label="Menú principal">
+  <button id="closeBtn" aria-label="Cerrar menú" style="background:none;border:0;color:#fff;align-self:flex-start;padding:4px;cursor:pointer"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <div class="mt-6 d">
+    <a href="#top" data-go="all">Home</a>
+    <a href="#catalogo" data-go="tee">Camisetas</a>
+    <a href="#drop" data-go="drop">Drop 003</a>
+    <a href="#rastreo" data-go="trk">Controla tu pedido</a>
+  </div>
+  <p class="mt-auto pt-10 italic font-extrabold text-lg">🇪🇸 EUR / ES</p>
+  <p class="sig" style="opacity:.8">HECHO POR PEPE</p>
+</nav>
+
+<section class="hero" id="drop">
+  <div class="bgword d" aria-hidden="true">AUROR</div><div id="orbs" aria-hidden="true"></div>
+  <svg class="badge" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="cp" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text font-size="11.5" font-weight="900" font-style="italic" fill="#fff" font-family="Montserrat,sans-serif" letter-spacing="2"><textPath href="#cp">NEVER MEANT TO BLEND IN ✦ DROP 003 ✦ </textPath></text><circle cx="60" cy="60" r="20" fill="#fff"/><text x="60" y="64" text-anchor="middle" font-size="12" font-weight="900" font-style="italic">003</text></svg>
+  <p class="font-bold italic text-sm m-0 mb-2 relative" style="z-index:2">NUEVA COLECCIÓN ✦ 2026</p>
+  <h1 class="d">Drop<br>003</h1>
+  <div class="stage3" id="stage">
+    <div class="rc" id="ring"></div>
+  </div>
+  <div class="flex flex-wrap gap-3 justify-center mt-6 pb-4">
+    <a class="cta" href="#catalogo" data-filter="hood">Ver sudaderas</a>
+    <a class="cta dark" href="#rastreo" style="background:#000;color:#fff">Rastrear pedido</a>
+  </div>
+</section>
+
+<div class="band d" aria-hidden="true"><div id="mq1"></div></div>
+<section class="px-5 py-24 max-w-5xl mx-auto"><p class="d mf" id="mf" style="font-size:clamp(34px,9vw,110px);line-height:.98"></p></section>
+<section aria-label="Lookbook"><div class="px-4 pt-14 pb-6 rv"><h2 class="d" style="font-size:clamp(46px,13vw,170px);margin:0">Never meant<br><span class="outline">to blend in</span></h2></div><div class="lb" id="lb"></div></section>
+<div class="grid grid-cols-3 text-center rv" style="background:#000;color:#fff"><div class="py-8"><b class="d block" style="font-size:clamp(44px,13vw,150px)" data-n="12">00</b><span class="text-xs italic">piezas</span></div><div class="py-8"><b class="d block" style="font-size:clamp(44px,13vw,150px);color:var(--red)" data-n="3">00</b><span class="text-xs italic">drops</span></div><div class="py-8"><b class="d block" style="font-size:clamp(44px,13vw,150px)" data-n="2">00</b><span class="text-xs italic">colecciones</span></div></div>
+
+<section class="spot" aria-label="Pieza destacada"><div class="ring d" aria-hidden="true">003 003</div><div class="spin" id="spinG"></div><div class="rv"><p class="d" style="font-size:clamp(44px,11vw,130px);margin:0 0 14px">Edición<br>Fresa</p><p class="m-0 mb-5 text-xl">30,00 € · Oversize · Drop 003</p><button class="cta" id="spotBtn">Ver y elegir talla</button></div></section>
+<main class="px-4 py-10 max-w-6xl mx-auto" id="catalogo">
+  <div class="flex items-end justify-between flex-wrap gap-4 mb-8">
+    <h2 class="d" style="font-size:clamp(40px,9vw,80px);margin:0">Dawnkids</h2>
+    <div class="flex gap-2 flex-wrap" id="filters">
+      <button class="chip on" data-f="all">Todo</button>
+      <button class="chip" data-f="tee">Camisetas</button>
+      <button class="chip" data-f="hood">Sudaderas</button>
+    </div>
+  </div>
+  <div class="grid2" id="grid"></div>
+</main>
+
+<div class="band d" style="background:#000" aria-hidden="true"><div id="mq2" style="animation-direction:reverse"></div></div>
+<section id="rastreo" class="py-12 px-3" style="background:var(--red)">
+  <div class="trk">
+    <h2 class="d text-center" style="font-size:clamp(40px,10vw,70px);margin:0 0 28px">Rastrea<br>tu pedido</h2>
+    <div class="flex" role="tablist">
+      <button class="tab on" role="tab" data-m="o">Número de pedido</button>
+      <button class="tab" role="tab" data-m="t">Número de seguimiento</button>
+    </div>
+    <form id="tf" novalidate>
+      <div id="fo">
+        <label for="n1">Número de pedido</label><input id="n1" inputmode="numeric" autocomplete="off">
+        <label for="n2">Correo electrónico o número de teléfono</label><input id="n2" autocomplete="email">
+      </div>
+      <div id="ft" hidden><label for="n3">Número de seguimiento</label><input id="n3" autocomplete="off"></div>
+      <p id="err" class="text-sm mt-3" style="color:#e00;min-height:1.2em" role="alert"></p>
+      <button class="cta dark w-full mt-2" style="background:var(--ink);color:var(--paper)">Rastrear</button>
+    </form>
+    <ul class="steps mt-4 p-0" id="steps" hidden></ul>
+    <p class="text-xs opacity-60 mt-4">Prototipo: el resultado es una simulación, no consulta envíos reales.</p>
+  </div>
+</section>
+
+<div class="mega d" aria-hidden="true">Auror Studios</div>
+<footer class="px-4 py-10 text-center text-sm">
+  <p class="m-0 opacity-80">© 2026 Auror Studios Dept.</p>
+  <p class="sig mt-3 mb-0">HECHO POR PEPE</p>
+  <p class="opacity-70 mt-3 mb-24">Impuestos incluidos. Gastos de envío calculados al finalizar la compra.</p>
+</footer>
+
+<button id="chatBtn" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5M16 5a3 3 0 010 6M18 14c2 .5 3 2 3 4"/></svg>Chat</button>
+<aside id="chat" aria-label="Asistencia">
+  <div class="d p-3" style="font-size:18px;border-bottom:3px solid var(--ink)">Asistencia rápida</div>
+  <div id="log"><p class="bot">Hola 👋 ¿En qué te ayudo?</p></div>
+  <div class="flex flex-wrap gap-2 p-3 pt-0" id="qr">
+    <button class="chip" style="padding:6px 10px;font-size:11px">Tallas</button>
+    <button class="chip" style="padding:6px 10px;font-size:11px">Envíos</button>
+    <button class="chip" style="padding:6px 10px;font-size:11px">Mi pedido</button>
+  </div>
+</aside>
+<div id="qv" role="dialog" aria-modal="true" aria-label="Vista rápida"><div class="box"><div id="qvView"></div><div class="p-6 flex flex-col gap-3"><button id="qvClose" aria-label="Cerrar" class="self-end chip">Cerrar</button><h3 class="d" id="qvT" style="font-size:clamp(28px,5vw,44px);margin:0"></h3><p id="qvP" class="text-2xl m-0"></p><p class="text-sm opacity-80 m-0">Arrastra la prenda para girarla. Impuestos incluidos.</p><div class="szs" id="qvS"></div><button class="cta" id="qvAdd" style="background:var(--ink);color:var(--paper)">Añadir a la bolsa</button></div></div></div>
+<div id="cartO"></div>
+<aside id="cartP" aria-label="Bolsa"><div class="flex items-center justify-between p-4" style="border-bottom:3px solid var(--ink)"><h2 class="d" style="font-size:34px;margin:0">Tu bolsa</h2><button class="chip" id="cartX">Cerrar</button></div><ul id="cl" class="grow min-h-0 overflow-y-auto m-0 p-4"></ul><div class="p-4" style="border-top:3px solid var(--ink)"><div class="flex justify-between text-lg font-bold mb-1"><span>Subtotal</span><span id="ct">0,00 €</span></div><p class="text-xs opacity-70 mt-0 mb-3">Impuestos incluidos. Gastos de envío calculados al finalizar la compra.</p><button class="cta w-full" id="pay" style="background:var(--red);color:#fff">Finalizar compra</button></div></aside>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* ---------- Prendas en SVG ---------- */
+const TEE='M62 18 L38 30 L6 60 L28 88 L46 76 L46 178 L154 178 L154 76 L172 88 L194 60 L162 30 L138 18 Q100 38 62 18Z';
+const HOOD='M66 26 Q100 2 134 26 L158 38 L190 66 L198 154 L176 164 L156 106 L156 178 L44 178 L44 106 L24 164 L2 154 L10 66 L42 38Z';
+const T=(x,y,s,t,f,w=800,a='middle')=>`<text x="${x}" y="${y}" font-size="${s}" font-weight="${w}" font-style="italic" text-anchor="${a}" fill="${f}" font-family="Montserrat,sans-serif">${t}</text>`;
+const pill=(x,y,w,t,f='#fff',k='#000')=>`<ellipse cx="${x}" cy="${y}" rx="${w}" ry="5.5" fill="${f}"/>${T(x,y+2.4,6.5,t,k,900)}`;
+function garment(p){
+  const hood=p.k==='hood';
+  const body=hood
+    ?`<path d="${HOOD}" fill="${p.c}"/><path d="M66 26 Q100 2 134 26 L118 62 Q100 70 82 62Z" fill="rgba(0,0,0,.18)"/><path d="M72 128 L128 128 L138 168 L62 168Z" fill="none" stroke="rgba(128,128,128,.55)" stroke-width="1.5"/><path d="M44 170h112" stroke="rgba(0,0,0,.2)" stroke-width="8"/>`
+    :`<path d="${TEE}" fill="${p.c}"/><path d="M62 18 Q100 38 138 18" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="5"/>`;
+  return `<svg viewBox="0 0 200 190" role="img" aria-label="${p.n}">${body}${p.pr}</svg>`;
+}
+const P=[
+{k:'tee',n:'AMPLITUDE',p:20,c:'#1d3461',pr:`<g fill="none" stroke="#9db4e0" stroke-width="1.4"><ellipse cx="72" cy="66" rx="9" ry="3"/><path d="M100 60l5 9h-10zM122 62v8M126 60v12M130 63v6"/></g>`},
+{k:'tee',n:'IMPACTO QUIET',p:18,c:'#fff',pr:`<ellipse cx="100" cy="64" rx="6" ry="3" fill="none" stroke="#000" stroke-width="1.3"/><circle cx="100" cy="64" r="1.3"/>`},
+{k:'tee',n:'Auror Artefact',p:20,c:'#fafafa',pr:T(76,64,7,'gallery','#000',500)+T(126,64,5.5,'Auror Design','#000',500)},
+{k:'tee',n:'Heartwave',p:20,c:'#ff4d4d',pr:`<path d="M128 56c-4-6-12 0-6 7l6 6 6-6c6-7-2-13-6-7z" fill="#fff"/>${T(128,64,3.6,'LOVE AUROR','#ff4d4d',900)}`},
+{k:'hood',n:'Excepcional',p:30,c:'#0c0c0c',pr:T(66,78,5.5,'aurorstudios®','#fff',900)+pill(130,78,13,'out standing')},
+{k:'hood',n:'Departamento de Horología',p:30,c:'#0c0c0c',pr:T(134,76,5.5,'AURORSTUDIOS®','#fff',900)},
+{k:'hood',n:'Edición Candy',p:30,c:'#f6f6f6',pr:`<g><circle cx="86" cy="80" r="9" fill="#e84a8a"/><circle cx="104" cy="76" r="10" fill="#7a3fc1"/><circle cx="96" cy="88" r="9" fill="#2f6fe0"/><circle cx="116" cy="86" r="8" fill="#38b24a"/></g>${T(100,84,7,'auror studios','#fff',900)}`},
+{k:'hood',n:'Estilo NY',p:30,c:'#0c0c0c',pr:T(136,78,7,'AUROR','#fff',900)},
+{k:'hood',n:'Edición Superior',p:30,c:'#efbcc2',pr:T(100,96,46,'auror','#fff',900)+T(100,106,3.8,'NEVER MEANT TO BLEND IN.','#fff',900)},
+{k:'hood',n:'Descentrada',p:30,c:'#0c0c0c',pr:T(100,92,34,'off center','#fff',900)},
+{k:'hood',n:'Edición desmontable',p:30,c:'#0c0c0c',pr:pill(70,80,13,'out standing')+T(100,82,4.5,'OFF CENTER','#fff',700)+pill(130,80,10,'ASD')},
+{k:'hood',n:'Edición Fresa',p:30,c:'#fbfbfb',pr:pill(78,82,10,'003','#e32','#fff')+pill(124,82,10,'ASD','#e32','#fff')}
+];
+const nm=p=>(p.k==='tee'?'Camiseta Oversize ':'Sudadera con capucha ')+'“'+p.n+'”';
+const eur=n=>n.toFixed(2).replace('.',',')+' €';
+/* ---------- Catálogo ---------- */
+const grid=$('#grid');
+grid.innerHTML=P.map((p,i)=>`<article class="card" data-k="${p.k}" data-i="${i}"><div class="tilt">${garment(p)}<div class="sizes">${['S','M','L','XL'].map((s,j)=>`<b data-s="${s}" class="${j==1?'sel':''}" role="button" tabindex="0">${s}</b>`).join('')}</div></div><h3>${nm(p)}</h3><p class="pr">${eur(p.p)}</p><button class="add">Añadir</button></article>`).join('');
+
+$('#mq1').innerHTML=('DEPARTAMENTO ESTUDIOS AUROR ✦ ').repeat(8);
+/* Inclinación 3D por puntero / dedo */
+function tilt(card){
+  const t=card.querySelector('.tilt');
+  const mv=e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    t.style.setProperty('--rx',(-y*22)+'deg');t.style.setProperty('--ry',(x*22)+'deg');t.style.setProperty('--s',1.05);
+    t.style.setProperty('--gx',(x*100+50)+'%');t.style.setProperty('--gy',(y*100+50)+'%')};
+  const rs=()=>['--rx','--ry','--s'].forEach(v=>t.style.removeProperty(v));
+  card.addEventListener('pointermove',mv);card.addEventListener('pointerleave',rs);card.addEventListener('pointerup',e=>{if(e.pointerType==='touch')setTimeout(rs,400)});card.addEventListener('pointercancel',rs);
+}
+$$('.card').forEach(tilt);
+grid.addEventListener('click',e=>{
+  const c=e.target.closest('.card');if(!c)return;
+  if(e.target.matches('.sizes b')){c.querySelectorAll('.sizes b').forEach(b=>b.classList.toggle('sel',b===e.target));return}
+  if(e.target.matches('.add')){const s=c.querySelector('.sel')?.dataset.s||'M';addCart(+c.dataset.i,s,c.querySelector('.tilt svg'));return}
+  openQV(+c.dataset.i);
+});
+let cart=[],tm;
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(tm);tm=setTimeout(()=>el.classList.remove('on'),1800)}
+$('#cartBtn').onclick=()=>openCart();
+/* Filtros */
+function filter(f){$$('#filters .chip').forEach(b=>b.classList.toggle('on',b.dataset.f===f));$$('.card').forEach(c=>c.style.display=(f==='all'||c.dataset.k===f)?'':'none')}
+$('#filters').onclick=e=>e.target.dataset.f&&filter(e.target.dataset.f);
+$$('[data-filter]').forEach(a=>a.addEventListener('click',()=>filter(a.dataset.filter)));
+/* Menú inmersivo */
+const dr=$('#drawer');
+const setMenu=o=>{dr.classList.toggle('open',o);document.body.style.overflow=o?'hidden':''};
+$('#menuBtn').onclick=()=>setMenu(true);$('#closeBtn').onclick=()=>setMenu(false);
+$$('#drawer a').forEach(a=>a.addEventListener('click',()=>{const g=a.dataset.go;if(g==='tee')filter('tee');if(g==='all')filter('all');setMenu(false)}));
+addEventListener('keydown',e=>{if(e.key==='Escape'){setMenu(false);$('#chat').classList.remove('open')}});
+/* Tema */
+$('#themeBtn').onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).colorScheme==='dark';r.dataset.theme=d?'light':'dark'};
+/* Hero 3D: ratón, dedo y giroscopio */
+const hero=$('.hero'),st=$('#stage');
+function hv(x,y){st.style.setProperty('--ry',(x*26)+'deg');st.style.setProperty('--rx',(-y*18)+'deg');hero.style.setProperty('--tx',(x*-14)+'px');hero.style.setProperty('--ty',(y*-8)+'px')}
+hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hv((e.clientX-r.left)/r.width-.5,(e.clientY-r.top)/r.height-.5)});
+hero.addEventListener('pointerleave',()=>hv(0,0));
+addEventListener('deviceorientation',e=>{if(e.gamma==null)return;hv(Math.max(-.5,Math.min(.5,e.gamma/60)),Math.max(-.5,Math.min(.5,(e.beta-45)/90)))});
+/* Rastreo */
+let mode='o';
+$$('.tab').forEach(b=>b.onclick=()=>{mode=b.dataset.m;$$('.tab').forEach(x=>x.classList.toggle('on',x===b));$('#fo').hidden=mode!=='o';$('#ft').hidden=mode!=='t';$('#err').textContent='';$('#steps').hidden=true});
+$('#tf').onsubmit=e=>{e.preventDefault();const err=$('#err');
+  const ok=mode==='o'?$('#n1').value.trim()&&$('#n2').value.trim():$('#n3').value.trim();
+  if(!ok){err.textContent=mode==='o'?'Introduce el número de pedido y tu correo o teléfono.':'Introduce el número de seguimiento.';return}
+  err.textContent='';
+  const L=[['Pedido confirmado','ok'],['Preparando tu pedido','ok'],['En tránsito','now'],['Entregado','']];
+  const s=$('#steps');s.innerHTML=L.map(([t,c])=>`<li class="${c==='now'?'ok now':c}"><i></i><span>${t}</span></li>`).join('');s.hidden=false;s.scrollIntoView({block:'center',behavior:'smooth'});
+};
+/* Chat */
+const R={Tallas:'Las prendas son oversize en tallas S, M, L y XL. Elige la talla en cada producto.',Envíos:'Impuestos incluidos. Los gastos de envío se calculan al finalizar la compra.','Mi pedido':'Te llevo al rastreo: necesitas tu número de pedido y tu correo o teléfono.'};
+$('#chatBtn').onclick=()=>{const o=$('#chat').classList.toggle('open');$('#chatBtn').setAttribute('aria-expanded',o)};
+$('#qr').onclick=e=>{const q=e.target.textContent;if(!R[q])return;const l=$('#log');l.insertAdjacentHTML('beforeend',`<p class="me">${q}</p><p class="bot">${R[q]}</p>`);l.scrollTop=l.scrollHeight;if(q==='Mi pedido')setTimeout(()=>{$('#chat').classList.remove('open');$('#rastreo').scrollIntoView({behavior:'smooth'})},900)};
+/* ---------- v2: más impacto ---------- */
+setTimeout(()=>$('#pre').classList.add('go'),1300);
+const pos=[[2,10,-14,0],[70,6,12,1.2],[3,64,10,.6]];
+$('#orbs').innerHTML=[4,5,10].map((k,i)=>`<div class="orb" style="left:${pos[i][0]}%;top:${pos[i][1]}%;--r:${pos[i][2]}deg;animation-delay:${pos[i][3]}s">${garment(P[k])}</div>`).join('');
+const cols=['#ff1f2d','#0a0a0a','#94b8f0','#f4b6c2','#2a3f8f','#ff6b57'],lbI=[4,9,8,11,2,0];
+$('#lb').innerHTML=lbI.map((k,i)=>`<div class="pan" style="background:${cols[i]}"><span class="w d ${i%2?'':'outline'}">${P[k].n.split(' ').slice(-1)[0]}</span>${garment(P[k])}<button class="cta" data-q="${k}" style="position:absolute;bottom:18px;left:18px;z-index:3">Ver · ${eur(P[k].p)}</button></div>`).join('');
+$$('.pan').forEach(p=>p.addEventListener('pointermove',e=>{const r=p.getBoundingClientRect();p.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*36+'deg')}));
+$('#lb').onclick=e=>{const b=e.target.closest('[data-q]');if(b)openQV(+b.dataset.q)};
+/* Vista rápida con giro 3D */
+let vy=0,drag=null,qi=0;const qvw=$('#qvView');
+function openQV(i){qi=i;const p=P[i];qvw.innerHTML=garment(p);$('#qvT').textContent=nm(p);$('#qvP').textContent=eur(p.p);$('#qvS').innerHTML=['S','M','L','XL'].map((s,j)=>`<b class="${j==1?'sel':''}" data-s="${s}" role="button" tabindex="0">${s}</b>`).join('');vy=0;qvw.style.setProperty('--vy','0deg');$('#qv').classList.add('open');document.body.style.overflow='hidden'}
+const closeQV=()=>{$('#qv').classList.remove('open');document.body.style.overflow=''};
+$('#qvClose').onclick=closeQV;$('#qv').addEventListener('click',e=>{if(e.target.id==='qv')closeQV()});addEventListener('keydown',e=>e.key==='Escape'&&closeQV());
+$('#qvS').onclick=e=>{if(e.target.dataset.s)$$('#qvS b').forEach(b=>b.classList.toggle('sel',b===e.target))};
+$('#qvAdd').onclick=()=>{addCart(qi,$('#qvS .sel').dataset.s,qvw.querySelector('svg'));closeQV()};
+qvw.addEventListener('pointerdown',e=>{drag={x:e.clientX,v:vy};qvw.setPointerCapture(e.pointerId)});
+qvw.addEventListener('pointermove',e=>{if(!drag)return;vy=Math.max(-60,Math.min(60,drag.v+(e.clientX-drag.x)*.4));qvw.style.setProperty('--vy',vy+'deg')});
+const endD=()=>{drag=null;vy=0;qvw.style.setProperty('--vy','0deg')};qvw.addEventListener('pointerup',endD);qvw.addEventListener('pointercancel',endD);
+/* Revelados, contadores, barra de progreso y cursor */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.card').forEach((c,i)=>{c.classList.add('rv');c.style.transitionDelay=(i%4)*80+'ms'});$$('.rv').forEach(el=>io.observe(el));
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io2.unobserve(e.target);const n=+e.target.dataset.n;let t0;const f=t=>{t0??=t;const k=Math.min((t-t0)/1200,1);e.target.textContent=String(Math.round(n*k)).padStart(2,'0');k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)}));$$('[data-n]').forEach(el=>io2.observe(el));
+addEventListener('scroll',()=>{$('#bar').style.width=(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100)+'%'},{passive:true});
+const cur=$('#cur');addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){cur.style.opacity=1;cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'}});
+document.addEventListener('pointerover',e=>{cur.style.width=cur.style.height=e.target.closest('a,button,.card,.pan')?'68px':'36px'});
+/* ---------- v3: bolsa, pieza destacada y vuelo al carrito ---------- */
+$('#spinG').innerHTML=garment(P[11]);$('#spotBtn').onclick=()=>openQV(11);
+$('#mq2').innerHTML=(P.map(p=>p.n).join(' ✦ ')+' ✦ ').repeat(2);
+function upd(){
+  $('#count').textContent=cart.reduce((a,x)=>a+x.q,0);
+  $('#cl').innerHTML=cart.length?cart.map((x,j)=>`<li class="ci"><div class="th">${garment(P[x.i])}</div><div class="g"><b>${nm(P[x.i])}</b><small>Talla ${x.s}</small><div class="qty"><button data-a="-" data-j="${j}" aria-label="Quitar una unidad">−</button><span>${x.q}</span><button data-a="+" data-j="${j}" aria-label="Añadir una unidad">+</button><button class="rm" data-a="x" data-j="${j}">Quitar</button></div></div><b>${eur(P[x.i].p*x.q)}</b></li>`).join(''):'<p class="emp">Tu bolsa está vacía.<br>Añade una prenda del catálogo.</p>';
+  $('#ct').textContent=eur(cart.reduce((a,x)=>a+P[x.i].p*x.q,0));
+}
+function addCart(i,s,el){
+  const f=cart.find(x=>x.i===i&&x.s===s);f?f.q++:cart.push({i,s,q:1});upd();fly(el);
+  setTimeout(()=>{$('#count').animate([{transform:'scale(2)'},{transform:'scale(1)'}],{duration:400});toast(`${P[i].n} · talla ${s} añadida`)},650);
+}
+function fly(el){
+  if(!el)return;const a=el.getBoundingClientRect(),b=$('#cartBtn').getBoundingClientRect(),n=el.cloneNode(true);
+  Object.assign(n.style,{position:'fixed',left:a.left+'px',top:a.top+'px',width:a.width+'px',height:a.height+'px',zIndex:120,pointerEvents:'none',transform:'none',filter:'drop-shadow(0 10px 10px rgba(0,0,0,.4))'});
+  document.body.appendChild(n);
+  n.animate([{transform:'translate(0,0) scale(1) rotate(0)',opacity:1},{transform:`translate(${b.left-a.left+b.width/2-a.width/2}px,${b.top-a.top+b.height/2-a.height/2}px) scale(.08) rotate(30deg)`,opacity:.5}],{duration:650,easing:'cubic-bezier(.6,-.2,.7,1)'}).onfinish=()=>n.remove();
+}
+const setCart=o=>{document.body.classList.toggle('cartOpen',o);document.body.style.overflow=o?'hidden':''};
+function openCart(){upd();setCart(true)}
+$('#cartX').onclick=()=>setCart(false);$('#cartO').onclick=()=>setCart(false);addEventListener('keydown',e=>e.key==='Escape'&&setCart(false));
+$('#cl').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const x=cart[+b.dataset.j],a=b.dataset.a;if(a==='+')x.q++;else if(a==='-')x.q--;else x.q=0;cart=cart.filter(y=>y.q>0);upd()};
+$('#pay').onclick=()=>toast(cart.length?'Prototipo: aquí iría el pago':'Añade una prenda a la bolsa');
+/* ---------- v4 ---------- */
+let n0=0;const pi=setInterval(()=>{n0=Math.min(100,n0+Math.ceil(Math.random()*9));$('#pn').textContent=n0;if(n0>=100)clearInterval(pi)},60);
+$('#ring').innerHTML=P.map((p,i)=>`<button class="it" data-q="${i}" style="--a:${i*30}deg" aria-label="Ver ${nm(p)}">${garment(p)}<small>${p.n}</small></button>`).join('');
+$('#ring').onclick=e=>{const b=e.target.closest('[data-q]');if(b)openQV(+b.dataset.q)};
+hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')});
+$('#mf').innerHTML='Never follow the path that was made for everyone else. Create your own, leave your mark, and remain outstanding.'.split(' ').map(w=>`<span>${w}</span>`).join(' ');
+const mfS=$$('#mf span'),mfU=()=>{const r=$('#mf').getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.8-r.top)/(r.height+innerHeight*.3)));mfS.forEach((s,i)=>s.classList.toggle('on',i/mfS.length<p))};
+addEventListener('scroll',mfU,{passive:true});mfU();
+$$('.cta').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.28}px)`});b.addEventListener('pointerleave',()=>b.style.transform='')});
+</script>
+</body>
+</html>
